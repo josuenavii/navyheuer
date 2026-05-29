@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navy Heuer | Alta Relojería & Marketplace Exclusivo</title>
+    
+    <!-- Tipografías Modernas y Casuales -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos Profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-deep: #050506;
+            --surface-card: #0d0d11;
+            --text-pure: #ffffff;
+            --text-muted: #8e8e93;
+            
+            /* Colores Vibrantes por Marca */
+            --brand-rolex: #00a65a;
+            --brand-tag: #e62020;
+            --brand-techno: #007aff;
+            --brand-navy: #d4af37;
+            
+            --vibrant-red: #ff3333;
+            
+            /* Nuevas fuentes menos lujosas, más modernas */
+            --font-display: 'Montserrat', sans-serif;
+            --font-sans: 'Roboto', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { background-color: var(--bg-deep); color: var(--text-pure); font-family: var(--font-sans); overflow-x: hidden; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: #2c2c2e; border-radius: 4px; }
+
+        /* Header Showroom */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background-color: rgba(5, 5, 6, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+        }
+
+        .brand-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-box { width: 40px; height: 40px; background: linear-gradient(135deg, var(--brand-navy), #000); border: 2px solid #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+        .brand-logo h1 { font-family: var(--font-display); font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .btn-nav { background: none; border: none; color: var(--text-pure); font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: var(--transition-smooth); padding: 10px 16px; border-radius: 8px; font-family: var(--font-sans); }
+        .btn-nav:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .btn-telegram { background: linear-gradient(90deg, #0088cc, #00aaff); border-radius: 30px; font-weight: 700; }
+        .btn-telegram:hover { transform: scale(1.05); }
+
+        .cart-badge-container { position: relative; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background-color: var(--vibrant-red); color: #fff; font-size: 11px; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(255,51,51,0.5); }
+
+        /* Carrusel Automático (Pantalla Animada) */
+        .hero-carousel { position: relative; height: 80vh; min-height: 500px; width: 100%; overflow: hidden; margin-top: 70px; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out, transform 1s ease-in-out; transform: scale(1.05); }
+        .slide.active { opacity: 1; transform: scale(1); z-index: 2; }
+        
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, var(--bg-deep) 5%, rgba(0,0,0,0.3) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        
+        .slide-content h2 { font-family: var(--font-display); font-size: 55px; font-weight: 800; margin-bottom: 15px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); text-transform: uppercase; }
+        .slide-content p { font-size: 18px; color: #ddd; font-weight: 400; text-shadow: 0 5px 15px rgba(0,0,0,0.8); }
+        
+        .carousel-indicators { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+        .indicator { width: 12px; height: 12px; border-radius: 50%; background-color: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
+        .indicator.active { background-color: var(--brand-navy); box-shadow: 0 0 10px var(--brand-navy); }
+
+        /* Filtros Multicolores */
+        .filter-container { display: flex; justify-content: center; gap: 15px; padding: 40px 5%; flex-wrap: wrap; }
+        .filter-btn { background-color: var(--surface-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-pure); padding: 12px 28px; border-radius: 30px; cursor: pointer; font-weight: 700; transition: var(--transition-smooth); font-size: 13px; text-transform: uppercase; font-family: var(--font-sans); }
+        
+        .filter-btn[data-brand="all"]:hover, .filter-btn[data-brand="all"].active { background-color: #fff; color: #000; }
+        .filter-btn[data-brand="Rolex"]:hover, .filter-btn[data-brand="Rolex"].active { background-color: var(--brand-rolex); border-color: var(--brand-rolex); box-shadow: 0 0 15px rgba(0,166,90,0.4); }
+        .filter-btn[data-brand="Tag Heuer"]:hover, .filter-btn[data-brand="Tag Heuer"].active { background-color: var(--brand-tag); border-color: var(--brand-tag); box-shadow: 0 0 15px rgba(230,32,32,0.4); }
+        .filter-btn[data-brand="Technomarine"]:hover, .filter-btn[data-brand="Technomarine"].active { background-color: var(--brand-techno); border-color: var(--brand-techno); box-shadow: 0 0 15px rgba(0,122,255,0.4); }
+        .filter-btn[data-brand="Navy Signature"]:hover, .filter-btn[data-brand="Navy Signature"].active { background-color: var(--brand-navy); border-color: var(--brand-navy); color: #000; box-shadow: 0 0 15px rgba(212,175,55,0.4); }
+
+        /* Catálogo y Tarjetas Multicolores */
+        .catalog-section { padding: 0 5% 100px 5%; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; }
+
+        .product-card { background-color: var(--surface-card); border-radius: 15px; overflow: hidden; transition: var(--transition-smooth); display: flex; flex-direction: column; position: relative; border-bottom: 4px solid transparent; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.8); }
+        
+        .product-card[data-brand="Rolex"]:hover { border-bottom-color: var(--brand-rolex); }
+        .product-card[data-brand="Tag Heuer"]:hover { border-bottom-color: var(--brand-tag); }
+        .product-card[data-brand="Technomarine"]:hover { border-bottom-color: var(--brand-techno); }
+        .product-card[data-brand="Navy Signature"]:hover { border-bottom-color: var(--brand-navy); }
+
+        .product-badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 8px; z-index: 2; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.5); pointer-events: none; }
+        
+        .badge-rolex { background: linear-gradient(45deg, #00592d, var(--brand-rolex)); }
+        .badge-tag { background: linear-gradient(45deg, #8a0000, var(--brand-tag)); }
+        .badge-techno { background: linear-gradient(45deg, #003d82, var(--brand-techno)); }
+        .badge-navy { background: linear-gradient(45deg, #8a701c, var(--brand-navy)); color: #000; }
+
+        /* Interacción para abrir detalle */
+        .clickable-area { cursor: pointer; flex-grow: 1; display: flex; flex-direction: column; }
+
+        .product-img-wrapper { width: 100%; height: 320px; overflow: hidden; position: relative; }
+        .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .product-img-wrapper img { transform: scale(1.08); }
+
+        .product-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-brand { font-size: 12px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+        
+        .text-rolex { color: var(--brand-rolex); }
+        .text-tag { color: var(--brand-tag); }
+        .text-techno { color: var(--brand-techno); }
+        .text-navy { color: var(--brand-navy); }
+
+        .product-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text-pure); line-height: 1.3; }
+        .product-specs { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px; margin-bottom: 25px; flex-grow: 1; font-family: var(--font-sans); }
+        .product-specs i { width: 20px; text-align: center; }
+
+        .product-meta-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+        .product-price { font-size: 24px; font-weight: 700; font-family: var(--font-display); }
+        
+        .btn-buy { width: 45px; height: 45px; border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; transition: var(--transition-smooth); position: relative; z-index: 3; }
+        .btn-buy:hover { transform: scale(1.1); }
+        
+        .btn-buy-rolex { background-color: var(--brand-rolex); }
+        .btn-buy-tag { background-color: var(--brand-tag); }
+        .btn-buy-techno { background-color: var(--brand-techno); }
+        .btn-buy-navy { background-color: var(--brand-navy); color: #000; }
+
+        /* Estructura Base de Modales */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-window { background-color: var(--surface-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; width: 100%; max-width: 500px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.show .modal-window { transform: translateY(0); }
+        .btn-close-modal { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.1); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border: none; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; transition: background 0.3s; }
+        .btn-close-modal:hover { background: var(--vibrant-red); }
+
+        /* Modal Detalle de Producto */
+        .detail-window { max-width: 900px; padding: 0; overflow: hidden; display: flex; flex-direction: row; }
+        .detail-image-sec { width: 50%; background-color: #000; position: relative; }
+        .detail-image-sec img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; }
+        .detail-info-sec { width: 50%; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        
+        .detail-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        .detail-feature-list { list-style: none; margin-bottom: 30px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .detail-feature-list li { margin-bottom: 10px; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .detail-feature-list li:last-child { margin-bottom: 0; }
+        .detail-feature-list i { color: var(--text-pure); width: 16px; }
+
+        .detail-price-box { display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .detail-price-box h3 { font-size: 28px; font-family: var(--font-display); font-weight: 800; }
+
+        /* Otros Modales */
+        .modal-window h3 { font-family: var(--font-display); font-size: 22px; text-align: center; margin-bottom: 20px; font-weight: 700; text-transform: uppercase; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; }
+        .btn-remove-item { background: none; border: none; color: var(--brand-tag); cursor: pointer; font-size: 18px; }
+        
+        .btn-primary-action { background: #fff; border: none; color: #000; padding: 15px 25px; border-radius: 8px; font-size: 15px; font-weight: 700; font-family: var(--font-sans); cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 15px; text-transform: uppercase; }
+        .btn-primary-action:hover { background: #ddd; }
+        .btn-primary-action.inline-btn { width: auto; margin-top: 0; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group input { width: 100%; padding: 15px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-family: var(--font-sans); }
+        .form-group input:focus { outline: none; border-color: #fff; }
+        .invoice-paper { background: #f4f4f4; color: #000; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; margin-bottom: 20px; }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .slide-content h2 { font-size: 35px; }
+            .nav-actions span { display: none; }
+            .catalog-grid { grid-template-columns: 1fr; }
+            
+            .detail-window { flex-direction: column; max-height: 85vh; overflow-y: auto; }
+            .detail-image-sec, .detail-info-sec { width: 100%; }
+            .detail-image-sec img { height: 300px; min-height: auto; }
+            .detail-info-sec { padding: 20px; }
+            .detail-price-box { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .detail-price-box .btn-primary-action { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera -->
+    <header>
+        <div class="brand-logo" onclick="filterCatalog('all')">
+            <div class="logo-box">NH</div>
+            <h1>Navy Heuer</h1>
+        </div>
+        <div class="nav-actions">
+            <a href="https://t.me/TuBotNavyHeuer" target="_blank" class="btn-nav btn-telegram">
+                <i class="fab fa-telegram font-lg"></i> <span>Concierge</span>
+            </a>
+            <div class="cart-badge-container">
+                <button class="btn-nav" onclick="openModal('cartModal')">
+                    <i class="fas fa-shopping-bag"></i> <span>Bolsa</span>
+                </button>
+                <div class="cart-count" id="cartBadgeCount">0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pantalla Animada (Carrusel Automático) -->
+    <section class="hero-carousel">
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1920&q=80" alt="Reloj 1">
+            <div class="slide-overlay"><div class="slide-content"><h2 style="color: #fff;">El Arte del Tiempo</h2><p>Descubre la colección exclusiva.</p></div></div>
+        </div>
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1920&q=80" alt="Reloj 2">
+            <div class="slide-overlay"><div class="slide-content"><h2 style="color: var(--brand-rolex);">Poder Verde</h2><p>La supremacía de Rolex.</p></div></div>
+        </div>
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1920&q=80" alt="Reloj 4">
+            <div class="slide-overlay"><div class="slide-content"><h2 style="color: var(--brand-navy);">Firma Exclusiva</h2><p>Colección Navy Signature.</p></div></div>
+        </div>
+        
+        <div class="carousel-indicators">
+            <div class="indicator active" onclick="goToSlide(0)"></div>
+            <div class="indicator" onclick="goToSlide(1)"></div>
+            <div class="indicator" onclick="goToSlide(2)"></div>
+        </div>
+    </section>
+
+    <!-- Filtros de Marcas -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-brand="all" onclick="filterCatalog('all')">Todos</button>
+        <button class="filter-btn" data-brand="Rolex" onclick="filterCatalog('Rolex')">Rolex</button>
+        <button class="filter-btn" data-brand="Tag Heuer" onclick="filterCatalog('Tag Heuer')">Tag Heuer</button>
+        <button class="filter-btn" data-brand="Technomarine" onclick="filterCatalog('Technomarine')">Technomarine</button>
+        <button class="filter-btn" data-brand="Navy Signature" onclick="filterCatalog('Navy Signature')">Navy Signature</button>
+    </div>
+
+    <!-- Catálogo Expandido -->
+    <section class="catalog-section">
+        <div class="catalog-grid" id="catalogGrid">
+            <!-- Renderizado por JS -->
+        </div>
+    </section>
+
+    <!-- Modal de Detalles del Producto -->
+    <div id="productDetailModal" class="modal-overlay">
+        <div class="modal-window detail-window">
+            <button class="btn-close-modal" onclick="closeModal('productDetailModal')"><i class="fas fa-times"></i></button>
+            
+            <div class="detail-image-sec">
+                <div class="product-badge" id="detailBadge" style="position: absolute; top: 20px; left: 20px;"></div>
+                <img id="detailImg" src="" alt="Detalle del Reloj">
+            </div>
+            
+            <div class="detail-info-sec">
+                <span id="detailBrand" class="product-brand" style="font-size: 14px;"></span>
+                <h2 id="detailTitle" style="font-family: var(--font-display); font-size: 32px; font-weight: 800; margin-bottom: 15px; line-height: 1.2; text-transform: uppercase;"></h2>
+                
+                <p id="detailDesc" class="detail-desc"></p>
+                
+                <ul class="detail-feature-list">
+                    <li><i class="fas fa-cogs"></i> <strong style="color:#fff; margin-right:5px;">Movimiento:</strong> <span id="detailMov"></span></li>
+                    <li><i class="fas fa-water"></i> <strong style="color:#fff; margin-right:5px;">Resistencia:</strong> <span id="detailRes"></span></li>
+                    <li><i class="fas fa-gem"></i> <strong style="color:#fff; margin-right:5px;">Cristal:</strong> Zafiro antirreflectante</li>
+                    <li><i class="fas fa-shield-alt"></i> <strong style="color:#fff; margin-right:5px;">Garantía:</strong> 5 Años Internacional</li>
+                </ul>
+                
+                <div class="detail-price-box">
+                    <h3 id="detailPrice"></h3>
+                    <button id="detailAddToCartBtn" class="btn-primary-action inline-btn">
+                        <i class="fas fa-cart-plus"></i> Añadir a la Bolsa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Carrito -->
+    <div id="cartModal" class="modal-overlay">
+        <div class="modal-window">
+            <button class="btn-close-modal" onclick="closeModal('cartModal')"><i class="fas fa-times"></i></button>
+            <h3>Bolsa de Compras</h3>
+            <div id="cartListItems"></div>
+            <h2 style="text-align: right; margin-top: 20px; color: #fff; font-family: var(--font-display);" id="cartTotalSum">$0</h2>
+            <button class="btn-primary-action" onclick="proceedToCheckout()">Proceder al Registro</button>
+        </div>
+    </div>
+
+    <!-- Modal: Registro -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="modal-window">
+            <button class="btn-close-modal" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button>
+            <h3>Datos de Facturación</h3>
+            <div class="form-group"><input type="text" id="regName" placeholder="Nombre Completo" required></div>
+            <div class="form-group"><input type="email" id="regEmail" placeholder="Correo Electrónico" required></div>
+            <div class="form-group"><input type="tel" id="regPhone" placeholder="Teléfono Móvil" required></div>
+            <button class="btn-primary-action" onclick="executeFinalPurchase()">Emitir Factura</button>
+        </div>
+    </div>
+
+    <!-- Modal: Factura -->
+    <div id="invoiceModal" class="modal-overlay">
+        <div class="modal-window">
+            <button class="btn-close-modal" onclick="closeModal('invoiceModal')"><i class="fas fa-times"></i></button>
+            <h3 style="color: var(--brand-rolex);">¡Compra Exitosa!</h3>
+            <div class="invoice-paper" id="invoicePaperTarget"></div>
+            <button class="btn-primary-action" style="background: #0088cc; color: #fff;" onclick="window.open('https://t.me/TuBotNavyHeuer', '_blank')">
+                <i class="fab fa-telegram"></i> Enviar al Concierge
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DEL CARRUSEL ANIMADO ---
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            indicators.forEach(i => i.classList.remove('active'));
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+        }
+        function nextSlide() { currentSlideIndex = (currentSlideIndex + 1) % slides.length; showSlide(currentSlideIndex); }
+        function goToSlide(index) { currentSlideIndex = index; showSlide(currentSlideIndex); }
+        setInterval(nextSlide, 5000);
+
+        // --- CATÁLOGO CON DESCRIPCIONES DETALLADAS ---
+        const productsDatabase = [
+            { id: 1, brand: "Rolex", name: "Submariner Date Hulk", price: 18500, badge: "Más Vendido", badgeClass: "badge-rolex", textClass: "text-rolex", btnClass: "btn-buy-rolex", image: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1000&q=80", mov: "Calibre 3235", res: "300m", desc: "El icónico Submariner con bisel y esfera verde 'Hulk'. Diseñado originalmente para la exploración submarina, hoy es un símbolo indiscutible de éxito y elegancia atemporal. Su caja Oyster de acero Oystersteel garantiza la máxima protección." },
+            { id: 2, brand: "Rolex", name: "Daytona Cosmograph Oro", price: 42000, badge: "Inversión", badgeClass: "badge-rolex", textClass: "text-rolex", btnClass: "btn-buy-rolex", image: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1000&q=80", mov: "Calibre 4130", res: "100m", desc: "Forjado en oro de 18 quilates, este cronógrafo nació para medir el tiempo en las pistas de carreras profesionales. Con su bisel cerámico y escala taquimétrica, es una pieza de colección con un valor en constante aumento." },
+            { id: 3, brand: "Rolex", name: "Datejust 41mm Blue Dial", price: 12400, badge: "Clásico", badgeClass: "badge-rolex", textClass: "text-rolex", btnClass: "btn-buy-rolex", image: "https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=1000&q=80", mov: "Automático 3235", res: "100m", desc: "La esencia del reloj clásico. Presenta una deslumbrante esfera azul profundo con acabado tipo sol y el emblemático brazalete Jubilee, perfecto para el uso diario en entornos ejecutivos." },
+            
+            { id: 4, brand: "Tag Heuer", name: "Carrera Chronograph", price: 6500, badge: "Racing", badgeClass: "badge-tag", textClass: "text-tag", btnClass: "btn-buy-tag", image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80", mov: "Heuer 02", res: "100m", desc: "Inspirado en la mítica Carrera Panamericana, este modelo rinde homenaje al espíritu del motor. Ofrece una legibilidad perfecta a altas velocidades y un diseño deportivo pero inmensamente sofisticado." },
+            { id: 5, brand: "Tag Heuer", name: "Monaco Gulf Special", price: 7800, badge: "Edición Limitada", badgeClass: "badge-tag", textClass: "text-tag", btnClass: "btn-buy-tag", image: "https://images.unsplash.com/photo-1619134778706-7015533a6150?auto=format&fit=crop&w=1000&q=80", mov: "Calibre 11", res: "100m", desc: "El reloj de caja cuadrada que popularizó Steve McQueen. Esta edición especial porta los colores legendarios de Gulf Racing, combinando rebeldía, audacia y la máxima precisión suiza." },
+            { id: 6, brand: "Tag Heuer", name: "Aquaracer Pro 300", price: 3200, badge: "Deportivo", badgeClass: "badge-tag", textClass: "text-tag", btnClass: "btn-buy-tag", image: "https://images.unsplash.com/photo-1587836374828-cb4387d59d57?auto=format&fit=crop&w=1000&q=80", mov: "Calibre 5", res: "300m", desc: "El reloj herramienta definitivo. Robusto, fiable y sumergible a 300 metros, cuenta con un bisel giratorio unidireccional de cerámica y marcadores luminiscentes para la más profunda oscuridad." },
+
+            { id: 7, brand: "Technomarine", name: "Manta Ray Grand", price: 1450, badge: "Buceo", badgeClass: "badge-techno", textClass: "text-techno", btnClass: "btn-buy-techno", image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1000&q=80", mov: "Cuarzo Suizo", res: "200m", desc: "Diseño agresivo y vanguardista. Inspirado en la majestuosidad de la raya manta, fusiona materiales de alta tecnología como la silicona premium y el acero endurecido para una experiencia acuática superior." },
+            { id: 8, brand: "Technomarine", name: "Cruise Medusa White", price: 950, badge: "Elegancia", badgeClass: "badge-techno", textClass: "text-techno", btnClass: "btn-buy-techno", image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1000&q=80", mov: "Cronógrafo Cuarzo", res: "200m", desc: "El equilibrio perfecto entre el glamour en la ciudad y la vida en los yates. Su diseño en blanco prístino con acentos metálicos lo convierte en una pieza versátil y llamativa para cualquier ocasión." },
+            
+            { id: 9, brand: "Navy Signature", name: "Emerald Tourbillon Concept", price: 28000, badge: "Masterpiece", badgeClass: "badge-navy", textClass: "text-navy", btnClass: "btn-buy-navy", image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1000&q=80", mov: "Tourbillon Manual", res: "50m", desc: "La cumbre absoluta de la micro-ingeniería de Navy Heuer. Expone un Tourbillon flotante que desafía la gravedad, enmarcado en una caja de titanio de grado aeroespacial con detalles en verde esmeralda. Solo para coleccionistas verdaderos." },
+            { id: 10, brand: "Navy Signature", name: "Platinum Skeleton", price: 35000, badge: "Zafiro Puro", badgeClass: "badge-navy", textClass: "text-navy", btnClass: "btn-buy-navy", image: "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1000&q=80", mov: "Calibre Esqueleto", res: "30m", desc: "Un espectáculo visual. La esfera y el fondo de zafiro revelan la danza mecánica de su movimiento esqueleto, meticulosamente decorado a mano, contenido en un anillo de platino macizo." }
+        ];
+
+        let shoppingCart = [];
+
+        function renderCatalog(productsArray) {
+            const grid = document.getElementById("catalogGrid");
+            grid.innerHTML = "";
+            productsArray.forEach(prod => {
+                grid.innerHTML += `
+                    <div class="product-card" data-brand="${prod.brand}">
+                        <div class="product-badge ${prod.badgeClass}">${prod.badge}</div>
+                        
+                        <!-- Área Clicable que abre el Detalle -->
+                        <div class="clickable-area" onclick="openProductDetail(${prod.id})">
+                            <div class="product-img-wrapper">
+                                <img src="${prod.image}" alt="${prod.name}">
+                            </div>
+                            <div class="product-info">
+                                <span class="product-brand ${prod.textClass}">${prod.brand}</span>
+                                <h4 class="product-title">${prod.name}</h4>
+                                <div class="product-specs">
+                                    <span><i class="fas fa-cogs" style="color:#aaa;"></i> ${prod.mov}</span>
+                                    <span><i class="fas fa-water" style="color:#0088cc;"></i> ${prod.res}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fila Inferior con Botón de Compra Directa -->
+                        <div class="product-meta-row" style="padding: 0 25px 25px 25px; margin-top: -10px;">
+                            <span class="product-price">$${prod.price.toLocaleString()}</span>
+                            <button class="btn-buy ${prod.btnClass}" onclick="addItemToCart(${prod.id}, event)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCatalog(brandName) {
+            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+            document.querySelector(`.filter-btn[data-brand="${brandName}"]`).classList.add("active");
+            
+            if(brandName === 'all') renderCatalog(productsDatabase);
+            else renderCatalog(productsDatabase.filter(p => p.brand === brandName));
+        }
+
+        // Inicializar
+        document.addEventListener("DOMContentLoaded", () => renderCatalog(productsDatabase));
+
+        // --- LÓGICA DEL DETALLE DE PRODUCTO ---
+        function openProductDetail(id) {
+            const prod = productsDatabase.find(p => p.id === id);
+            
+            document.getElementById("detailImg").src = prod.image;
+            document.getElementById("detailBrand").innerText = prod.brand;
+            document.getElementById("detailBrand").className = `product-brand ${prod.textClass}`;
+            document.getElementById("detailTitle").innerText = prod.name;
+            document.getElementById("detailDesc").innerText = prod.desc;
+            document.getElementById("detailMov").innerText = prod.mov;
+            document.getElementById("detailRes").innerText = prod.res;
+            document.getElementById("detailPrice").innerText = `$${prod.price.toLocaleString()}`;
+            
+            const badge = document.getElementById("detailBadge");
+            badge.className = `product-badge ${prod.badgeClass}`;
+            badge.innerText = prod.badge;
+            
+            const btnDetailAdd = document.getElementById("detailAddToCartBtn");
+            btnDetailAdd.onclick = () => {
+                addItemToCart(prod.id);
+                closeModal('productDetailModal');
+                openModal('cartModal');
+            };
+
+            openModal('productDetailModal');
+        }
+
+        // --- LÓGICA DE COMPRA ---
+        function addItemToCart(id, event) {
+            if(event) event.stopPropagation();
+            
+            const product = productsDatabase.find(p => p.id === id);
+            shoppingCart.push(product);
+            document.getElementById("cartBadgeCount").innerText = shoppingCart.length;
+            
+            const bagIcon = document.querySelector('.fa-shopping-bag');
+            bagIcon.style.color = "var(--vibrant-red)";
+            bagIcon.style.transform = "scale(1.4)";
+            setTimeout(() => { bagIcon.style.color = ""; bagIcon.style.transform = "scale(1)"; }, 300);
+        }
+
+        function buildCart() {
+            const list = document.getElementById("cartListItems");
+            list.innerHTML = "";
+            let total = 0;
+            shoppingCart.forEach((item, i) => {
+                total += item.price;
+                list.innerHTML += `
+                    <div class="cart-item-row">
+                        <div>
+                            <strong style="color: #fff;">${item.name}</strong><br>
+                            <small style="color: #888;">${item.brand}</small>
+                        </div>
+                        <div style="display:flex; gap:15px; align-items:center;">
+                            <span style="font-weight:700;">$${item.price.toLocaleString()}</span>
+                            <button class="btn-remove-item" onclick="removeCartItem(${i})"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById("cartTotalSum").innerText = `Total: $${total.toLocaleString()}`;
+        }
+
+        function removeCartItem(index) {
+            shoppingCart.splice(index, 1);
+            document.getElementById("cartBadgeCount").innerText = shoppingCart.length;
+            buildCart();
+        }
+
+        // Control de modales
+        function openModal(id) {
+            if(id === 'cartModal') buildCart();
+            const modal = document.getElementById(id);
+            modal.classList.add('show');
+        }
+        function closeModal(id) { 
+            const modal = document.getElementById(id);
+            modal.classList.remove('show');
+        }
+        
+        function proceedToCheckout() {
+            if(shoppingCart.length === 0) return alert("Tu bolsa está vacía.");
+            closeModal('cartModal'); 
+            setTimeout(() => openModal('checkoutModal'), 300);
+        }
+
+        function executeFinalPurchase() {
+            const name = document.getElementById("regName").value;
+            if(!name) return alert("Por favor ingresa tu nombre.");
+            
+            const totalAmount = shoppingCart.reduce((sum, item) => sum + item.price, 0);
+            const dateStr = new Date().toLocaleString();
+            const txId = "NH-" + Math.floor(Math.random() * 900000);
+            
+            let itemsHtml = shoppingCart.map(it => `<tr><td style="padding:5px 0;">${it.name}</td><td style="text-align:right; padding:5px 0;">$${it.price.toLocaleString()}</td></tr>`).join('');
+            
+            document.getElementById("invoicePaperTarget").innerHTML = `
+                <div style="text-align:center; border-bottom:1px solid #ccc; padding-bottom:10px; margin-bottom:10px;">
+                    <h3 style="color:#000; margin-bottom:5px;">NAVY HEUER</h3>
+                    <p style="color:#555;">Factura de Compra</p>
+                </div>
+                <p><strong>Cliente:</strong> ${name}</p>
+                <p><strong>Transacción:</strong> ${txId}</p>
+                <p><strong>Fecha:</strong> ${dateStr}</p>
+                <table style="width:100%; margin-top:15px; border-collapse: collapse;">
+                    ${itemsHtml}
+                </table>
+                <h3 style="text-align:right; margin-top:15px; border-top:1px solid #ccc; padding-top:10px; color:#000;">TOTAL: $${totalAmount.toLocaleString()}</h3>
+            `;
+            
+            shoppingCart = [];
+            document.getElementById("cartBadgeCount").innerText = 0;
+            closeModal('checkoutModal');
+            setTimeout(() => openModal('invoiceModal'), 300);
+        }
+    </script>
+</body>
+</html>
+
