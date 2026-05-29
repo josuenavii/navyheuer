@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel CRM - Control de Clientes</title>
+    <style>
+        /* Estilos Modernos y Limpios (Sans-Serif) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Contenedor Principal */
+        .crm-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #1a202c;
+        }
+
+        /* Grid de Trabajo */
+        .crm-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        /* Formulario */
+        .form-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .form-box h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #3182ce;
+        }
+
+        btn-submit {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* Tabla de Clientes */
+        .table-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .table-box h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        /* Estados */
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-nuevo { background-color: #e3f2fd; color: #0d47a1; }
+        .status-proceso { background-color: #fff3e0; color: #e65100; }
+        .status-cerrado { background-color: #e8f5e9; color: #1b5e20; }
+
+        .btn-delete {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-delete:hover { background: #c53030; }
+    </style>
+</head>
+<body>
+
+    <div class="crm-container">
+        <header>
+            <h1>Gestor de Clientes (CRM)</h1>
+        </header>
+
+        <div class="crm-grid">
+            <!-- Formulario de Registro -->
+            <div class="form-box">
+                <h2>Añadir Cliente</h2>
+                <form id="crm-form">
+                    <div class="form-group">
+                        <label for="name">Nombre del Cliente</label>
+                        <input type="text" id="name" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono / Contacto</label>
+                        <input type="text" id="phone" required placeholder="Ej. +58 412...">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Estado del Lead</label>
+                        <select id="status">
+                            <option value="nuevo">Nuevo Interés</option>
+                            <option value="proceso">En Negociación</option>
+                            <option value="cerrado">Venta Cerrada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notas / Producto de interés</label>
+                        <textarea id="notes" rows="3" placeholder="Detalles de la conversación o pedido..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Guardar Cliente</button>
+                </form>
+            </div>
+
+            <!-- Tabla de visualización -->
+            <div class="table-box">
+                <h2>Lista de Seguimiento</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Contacto</th>
+                            <th>Estado</th>
+                            <th>Notas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="client-list">
+                        <!-- Los datos se inyectan con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica del CRM
+        const crmForm = document.getElementById('crm-form');
+        const clientList = document.getElementById('client-list');
+
+        // Cargar clientes al iniciar
+        document.addEventListener('DOMContentLoaded', displayClients);
+
+        // Evento para guardar cliente
+        crmForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const status = document.getElementById('status').value;
+            const notes = document.getElementById('notes').value;
+
+            const client = { id: Date.now(), name, phone, status, notes };
+
+            let clients = getClientsFromStorage();
+            clients.push(client);
+            localStorage.setItem('crm_clients', JSON.stringify(clients));
+
+            crmForm.reset();
+            displayClients();
+        });
+
+        // Obtener datos de LocalStorage
+        function getClientsFromStorage() {
+            return localStorage.getItem('crm_clients') ? JSON.parse(localStorage.getItem('crm_clients')) : [];
+        }
+
+        // Mostrar clientes en la tabla
+        function displayClients() {
+            const clients = getClientsFromStorage();
+            clientList.innerHTML = '';
+
+            clients.forEach(client => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${client.name}</strong></td>
+                    <td>${client.phone}</td>
+                    <td><span class="status status-${client.status}">${client.status.toUpperCase()}</span></td>
+                    <td>${client.notes || '-'}</td>
+                    <td><button class="btn-delete" onclick="deleteClient(${client.id})">Eliminar</button></td>
+                `;
+                clientList.appendChild(row);
+            });
+        }
+
+        // Eliminar cliente
+        window.deleteClient = function(id) {
+            let clients = getClientsFromStorage();
+            clients = clients.filter(client => client.id !== id);
+            localStorage.setItem('crm_clients', JSON.stringify(clients));
+            displayClients();
+        }
+    </script>
+</body>
+</html>
